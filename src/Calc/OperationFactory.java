@@ -1,66 +1,54 @@
-
 package Calc;
-
 
 public class OperationFactory {
    
-    private final ComplexMath cm = new ComplexMath(); // shared adaptee
+    private final ComplexMath complex = new ComplexMath(); 
+    public Operation getOperation(String operation) {
 
-    public Operation getOperation(String op) {
-       
-        if ("+".equals(op)) return new AddOperation();
-        if ("-".equals(op)) return new SubOperation();
-        if ("*".equals(op)) return new MulOperation();
-        if ("/".equals(op)) return new DivOperation();
+        if ("+".equals(operation)) return new AddOperation();
+        if ("-".equals(operation)) return new SubOperation();
+        if ("*".equals(operation)) return new MulOperation();
+        if ("/".equals(operation)) return new DivOperation();
 
-        
-        switch (op) {
+        switch (operation) {
+
             case "^" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.POW);
+                return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.POW);
             }
+
             case "√" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.ROOT);     // a^(1/b)
+                return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.SQRT);
             }
-            case "ln" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.LOGN);
-            }
-            case "log10" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.LOG10);
-            }
-            case "logb" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.LOG_BASE);
-            }
+
             case "exp" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.EXP);
+                return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.EXP);
             }
-            case "hypot" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.HYPOT);
+
+            case "logb" -> {
+                return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.LOG_BASE);
             }
-            case "atan2" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.ATAN2);
+
+            case "π" -> {
+                return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.PI);
             }
-            case "max" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.MAX);
+
+            case "%" -> {
+                return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.PERCENT);
             }
-            case "min" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.MIN);
+
+            case "sin" -> {
+                return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.SIN);
             }
-            case "Γ" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.GAMMA);
+
+            case "cos" -> {
+                return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.COS);
             }
-            case "β" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.BETA);
+
+            case "tan" -> {
+                return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.TAN);
             }
-            case "C" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.BINOMIAL);
-            }
-            case "erf" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.ERF);
-            }
-            case "erfc" -> {
-                return new ComplexMathAdapter(cm, ComplexMathAdapter.OpType.ERFC);
-            }
-            default -> throw new IllegalArgumentException("Unknown operation: " + op);
+
+            default -> throw new IllegalArgumentException("Unknown operation: " + operation);
         }
     }
 }

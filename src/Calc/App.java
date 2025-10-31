@@ -8,8 +8,8 @@ public class App {
        
         // Run the calculator UI
         SwingUtilities.invokeLater(() -> {
-            // If CalculatorUI is a Singleton:
-        CalculatorUI.getInstance().setVisible(true);
+            // If CalculatorUI2 is a Singleton:
+        CalculatorUI2.getInstance().setVisible(true);
 
         });
     }
