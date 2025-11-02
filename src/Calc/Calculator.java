@@ -91,15 +91,27 @@ public final class Calculator {
         this.currentOperand = value;
     }
 
+    public void applyUnaryOperation(String operation) {
+        if (this.currentOperand.isEmpty()) return;
 
-// === [ADD-ONLY] Advanced ops helper (non-invasive) ===
-public float applyAdvanced(String op, float a, float b) {
-    try {
-        OperationFactory f = new OperationFactory();
-        Operation operation = f.getOperation(op);
-        return operation.apply(a, b);
-    } catch (Throwable t) {
-        return Float.NaN;
-    }
+        float a = Float.parseFloat(this.currentOperand);
+        float result;
+
+        Operation opr = operationFactory.getOperation(operation);
+        result = opr.apply(a, 0); 
+        if (Float.isNaN(result) || Float.isInfinite(result)) {
+            this.clear();
+            this.currentOperand = "Error";
+            return;
+        }
+        if (Math.abs(result) < 1e-6) {
+            result = 0;
+        }
+        this.currentOperand = (result - (int) result) != 0
+                ? Float.toString(result)
+                : Integer.toString((int) result);
+
+        this.operation = "";
+        this.previousOperand = "";
 }
 }

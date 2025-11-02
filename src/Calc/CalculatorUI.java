@@ -2,49 +2,15 @@
 package Calc;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
-import java.awt.event.*;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import javax.swing.JButton;
 
 
-public class CalculatorUI extends javax.swing.JFrame {
+public final class CalculatorUI extends javax.swing.JFrame {
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CalculatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CalculatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CalculatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CalculatorUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CalculatorUI().setVisible(true);
-            }
-        });
-    }
-    
     private static CalculatorUI instance = null;
     private final Calculator calculator ;
     private int x, y;
@@ -54,7 +20,6 @@ public class CalculatorUI extends javax.swing.JFrame {
         calculator = new Calculator();
         initComponents();
         getContentPane().setSize(400, 700);
-        //this.setPreferredSize(new Dimension(400, 700));
         updateDisplay();
         addEvents();
     }
@@ -65,8 +30,6 @@ public class CalculatorUI extends javax.swing.JFrame {
         return instance;
     }
     
-
-  
     public void addEvents() {
         JButton[] btns = {
             btn0, btn1, btn2, btn3, btn4,
@@ -101,19 +64,16 @@ public class CalculatorUI extends javax.swing.JFrame {
 
                 @Override
                 public void mouseExited(MouseEvent e) {
-                    JButton[] specialButtons = {btnDiv, btnEqual, btnDel, btnMult, btnSub, btnPlus, btnClear,
-                            btnE, btnPercent, btnCloseParen, btnOpenParen, btnPower,btnPi, btnSqrt,
-                            btnTan, btnSin, btnCos};
                     
-                    Object b = e.getSource();
+                    JButton b = (JButton) e.getSource();
                     if (b == btnClear) {
                         ((JButton) b).setBackground(new Color(255, 0, 0));
                     } else if (b == btnDel) {
                         ((JButton) b).setBackground(new Color(255, 165, 0)); 
-                    } else if(Arrays.asList(specialButtons).contains(b)) {
-                        ((JButton) b).setBackground(new Color(41, 39, 44));
-                    } else {
+                    } else if (Arrays.asList(numbers).contains(b)||b == btnDot ||b ==btnPlusSub) {
                         ((JButton) b).setBackground(new Color(21, 20, 22));
+                    } else {
+                        ((JButton) b).setBackground(new Color(41, 39, 44));
                     }
                 }
             });
@@ -748,34 +708,25 @@ public class CalculatorUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void previousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_previousActionPerformed
 
     private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
-        if (!calculator.getCurrentOperand().isEmpty()) {
-                float a = Float.parseFloat(calculator.getCurrentOperand());
-                float r = calculator.applyAdvanced("cos", a, 0);
-                calculator.setCurrentOperand(String.valueOf(r));
-                updateDisplay();
-            }
+        calculator.applyUnaryOperation("cos");
+        updateDisplay();
     }//GEN-LAST:event_btnCosActionPerformed
 
     private void btnSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
-        if (!calculator.getCurrentOperand().isEmpty()) {
-             float a = Float.parseFloat(calculator.getCurrentOperand());
-             float r = calculator.applyAdvanced("sin", a, 0);
-             calculator.setCurrentOperand(String.valueOf(r));
-             updateDisplay();
-         }
+        calculator.applyUnaryOperation("sin");
+        updateDisplay();          
+            
+        
     }//GEN-LAST:event_btnSinActionPerformed
 
     private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
-        if (!calculator.getCurrentOperand().isEmpty()) {
-            float a = Float.parseFloat(calculator.getCurrentOperand());
-            float r = calculator.applyAdvanced("tan", a, 0);
-            calculator.setCurrentOperand(String.valueOf(r));
-            updateDisplay();
-        }
+        calculator.applyUnaryOperation("tan");
+        updateDisplay();  
+        
     }//GEN-LAST:event_btnTanActionPerformed
 
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
@@ -793,7 +744,7 @@ public class CalculatorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOpenParenActionPerformed
 
     private void btnLogbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogbActionPerformed
-        calculator.chooseOperation("logb");
+        calculator.chooseOperation("log");
         updateDisplay();
     }//GEN-LAST:event_btnLogbActionPerformed
 
@@ -808,12 +759,9 @@ public class CalculatorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMultActionPerformed
 
     private void btnSqrtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtActionPerformed
-        if (!calculator.getCurrentOperand().isEmpty()) {
-            float a = Float.parseFloat(calculator.getCurrentOperand());
-            float r = calculator.applyAdvanced("sqrt", a, 0);
-            calculator.setCurrentOperand(String.valueOf(r));
-            updateDisplay();
-        }
+        calculator.applyUnaryOperation("√");
+        updateDisplay();
+
     }//GEN-LAST:event_btnSqrtActionPerformed
 
     private void btnPowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPowerActionPerformed
@@ -863,22 +811,28 @@ public class CalculatorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPlusSubActionPerformed
 
     private void btnEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEActionPerformed
+        String curr = calculator.getCurrentOperand();
+        if (!curr.isEmpty() && !curr.equals("0")) {
+            String op = calculator.getOperation().isEmpty() ? "*" : calculator.getOperation();
+            calculator.chooseOperation(op);
+        }
         calculator.setCurrentOperand(String.valueOf(Math.E));
         updateDisplay();
     }//GEN-LAST:event_btnEActionPerformed
 
     private void btnPiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiActionPerformed
+        String curr = calculator.getCurrentOperand();
+        if (!curr.isEmpty() && !curr.equals("0")) {
+            String op = calculator.getOperation().isEmpty() ? "*" : calculator.getOperation();
+            calculator.chooseOperation(op);
+        }
         calculator.setCurrentOperand(String.valueOf(Math.PI));
         updateDisplay();
     }//GEN-LAST:event_btnPiActionPerformed
 
     private void btnPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPercentActionPerformed
-        if (!calculator.getCurrentOperand().isEmpty()) {
-        float a = Float.parseFloat(calculator.getCurrentOperand());
-        float r = calculator.applyAdvanced("%", a, 0);
-        calculator.setCurrentOperand(String.valueOf(r));
+        calculator.applyUnaryOperation("%");
         updateDisplay();
-    }
     }//GEN-LAST:event_btnPercentActionPerformed
 
     private void btnMiniMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMiniMouseEntered
@@ -890,7 +844,7 @@ public class CalculatorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMiniMouseExited
 
     private void btnMiniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMiniActionPerformed
-        setState(CalculatorUI2.ICONIFIED);
+        setState(CalculatorUI.ICONIFIED);
     }//GEN-LAST:event_btnMiniActionPerformed
 
     private void btnCloseMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseEntered
@@ -913,9 +867,9 @@ public class CalculatorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_titleBarMouseDragged
 
     private void titleBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleBarMousePressed
-        int xx = evt.getXOnScreen();
-        int yy = evt.getYOnScreen();
-        this.setLocation(xx - x, yy - y);
+        int newX = evt.getXOnScreen() - x;
+        int newY = evt.getYOnScreen() - y;
+        this.setLocation(newX, newY);
     }//GEN-LAST:event_titleBarMousePressed
 
 
