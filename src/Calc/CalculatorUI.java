@@ -862,14 +862,15 @@ public final class CalculatorUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void titleBarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleBarMouseDragged
-        x = evt.getX();
-        y = evt.getY();
-    }//GEN-LAST:event_titleBarMouseDragged
-
-    private void titleBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleBarMousePressed
         int newX = evt.getXOnScreen() - x;
         int newY = evt.getYOnScreen() - y;
         this.setLocation(newX, newY);
+        
+    }//GEN-LAST:event_titleBarMouseDragged
+
+    private void titleBarMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleBarMousePressed
+        x = evt.getX();
+        y = evt.getY();
     }//GEN-LAST:event_titleBarMousePressed
 
 
