@@ -1,25 +1,22 @@
 
 package Calc;
 
-
-import org.apache.commons.math3.util.FastMath;
-
 public class ComplexMath {
 
     public double pow(double a, double b) { 
-        return FastMath.pow(a, b); 
+        return Math.pow(a, b); 
     }
 
     public double logBase(double a, double base) { 
-        return FastMath.log(a) / FastMath.log(base); 
+        return Math.log(a) / Math.log(base); 
     }
 
     public double exp(double a) { 
-        return FastMath.exp(a); 
+        return Math.exp(a); 
     }
 
     public double Pi() { 
-        return FastMath.PI; 
+        return Math.PI; 
     }
 
     public double percent(double a) { 
@@ -27,19 +24,19 @@ public class ComplexMath {
     }
 
     public double sin(double a) { 
-        return FastMath.sin(a); 
+        return Math.sin(a); 
     }
 
     public double cos(double a) { 
-        return FastMath.cos(a); 
+        return Math.cos(a); 
     }
 
     public double tan(double a) { 
-        return FastMath.tan(a); 
+        return Math.tan(a); 
     }
 
     public double sqrt(double a) { 
-        return FastMath.sqrt(a); 
+        return Math.sqrt(a); 
     }
 }
 
