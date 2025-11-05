@@ -1,31 +1,19 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package Calc;
 
-// CalculatorUI.java
-
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
 
-
-public final class CalculatorUI extends javax.swing.JFrame  {
+public final class CalculatorUI22 extends javax.swing.JFrame {
 
     private static CalculatorUI instance = null;
     private final Calculator calculator ;
     private int x, y;
-    
         
 
     private CalculatorUI() {
@@ -34,7 +22,6 @@ public final class CalculatorUI extends javax.swing.JFrame  {
         getContentPane().setSize(400, 700);
         updateDisplay();
         addEvents();
-        setupThemeButton(); 
     }
         public static CalculatorUI getInstance() {
         if (instance == null) {
@@ -67,7 +54,6 @@ public final class CalculatorUI extends javax.swing.JFrame  {
 
             });
         }
-       
         for (JButton btn : btns) {
             btn.addMouseListener(new MouseAdapter() {
 
@@ -726,20 +712,20 @@ public final class CalculatorUI extends javax.swing.JFrame  {
     }//GEN-LAST:event_previousActionPerformed
 
     private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
-        calculator.startUnaryOperation("cos");
-    updateDisplay();
+        calculator.applyUnaryOperation("cos");
+        updateDisplay();
     }//GEN-LAST:event_btnCosActionPerformed
 
     private void btnSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
-        calculator.startUnaryOperation("sin");
-    updateDisplay();        
+        calculator.applyUnaryOperation("sin");
+        updateDisplay();          
             
         
     }//GEN-LAST:event_btnSinActionPerformed
-    
+
     private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
-        calculator.startUnaryOperation("tan");
-    updateDisplay();
+        calculator.applyUnaryOperation("tan");
+        updateDisplay();  
         
     }//GEN-LAST:event_btnTanActionPerformed
 
@@ -758,8 +744,8 @@ public final class CalculatorUI extends javax.swing.JFrame  {
     }//GEN-LAST:event_btnOpenParenActionPerformed
 
     private void btnLogbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogbActionPerformed
-        calculator.startUnaryOperation("log");
-    updateDisplay();
+        calculator.chooseOperation("log");
+        updateDisplay();
     }//GEN-LAST:event_btnLogbActionPerformed
 
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
@@ -773,8 +759,9 @@ public final class CalculatorUI extends javax.swing.JFrame  {
     }//GEN-LAST:event_btnMultActionPerformed
 
     private void btnSqrtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtActionPerformed
-        calculator.startUnaryOperation("√");
-    updateDisplay();
+        calculator.applyUnaryOperation("√");
+        updateDisplay();
+
     }//GEN-LAST:event_btnSqrtActionPerformed
 
     private void btnPowerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPowerActionPerformed
@@ -783,13 +770,8 @@ public final class CalculatorUI extends javax.swing.JFrame  {
     }//GEN-LAST:event_btnPowerActionPerformed
 
     private void btnCloseParenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseParenActionPerformed
-        if (!calculator.getUnaryOperation().isEmpty()) {
-        // نضع القوس في previousOperand للعرض
-        calculator.setPreviousOperand(calculator.getUnaryOperation() + "(" + calculator.getCurrentOperand() + ")");
-    } else {
         calculator.appendNumber(")");
-    }
-    updateDisplay();  
+        updateDisplay();  
     }//GEN-LAST:event_btnCloseParenActionPerformed
 
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
@@ -849,7 +831,7 @@ public final class CalculatorUI extends javax.swing.JFrame  {
     }//GEN-LAST:event_btnPiActionPerformed
 
     private void btnPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPercentActionPerformed
-        calculator.startUnaryOperation("%");
+        calculator.applyUnaryOperation("%");
         updateDisplay();
     }//GEN-LAST:event_btnPercentActionPerformed
 
@@ -859,8 +841,6 @@ public final class CalculatorUI extends javax.swing.JFrame  {
 
     private void btnMiniMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMiniMouseExited
         btnMini.setBackground(new Color(21,20,22));
-        btnMini.setForeground(Color.WHITE);
-
     }//GEN-LAST:event_btnMiniMouseExited
 
     private void btnMiniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMiniActionPerformed
@@ -934,131 +914,5 @@ public final class CalculatorUI extends javax.swing.JFrame  {
     private javax.swing.JPanel resultsPanel;
     private javax.swing.JLabel title;
     private javax.swing.JPanel titleBar;
-    private final javax.swing.JButton btnTheme = new javax.swing.JButton("💗 Select Mode");
     // End of variables declaration//GEN-END:variables
-    
-    private void setupThemeButton() {
-
-    btnTheme.setFocusPainted(false);
-    btnTheme.setBackground(new java.awt.Color(240, 240, 240));
-    btnTheme.setForeground(java.awt.Color.DARK_GRAY);
-    titleBar.add(btnTheme, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 2, 120, 26));
-
-    // قائمة الثيمات
-    JPopupMenu menu = new JPopupMenu();
-    JMenuItem dark = new JMenuItem("Dark Theme"); // اللون الأساسي
-    JMenuItem pink = new JMenuItem("Pink Theme");
-    JMenuItem blue = new JMenuItem("Blue Theme");
-    JMenuItem purple = new JMenuItem("Purple Theme");
-    JMenuItem green = new JMenuItem("Green Theme");
-
-    menu.add(dark);
-    menu.add(pink);
-    menu.add(blue);
-    menu.add(purple);
-    menu.add(green);
-
-    // فتح القائمة عند الضغط على الزر
-    btnTheme.addActionListener(e -> {
-        menu.show(btnTheme, 0, btnTheme.getHeight());
-    });
-
-    // تطبيق لكل لون
-    dark.addActionListener(e -> resetCalculatorUI());
-    pink.addActionListener(e -> applyTheme(new java.awt.Color(255, 192, 203)));   // Pink
-    blue.addActionListener(e -> applyTheme(new java.awt.Color(173, 216, 230)));   // Light Blue
-    purple.addActionListener(e -> applyTheme(new java.awt.Color(230, 200, 255))); // Purple
-    green.addActionListener(e -> applyTheme(new java.awt.Color(200, 255, 200)));  // Light Green
-}
-    private Color getTextColor(Color bg) {
-    int brightness = (int)(bg.getRed()*0.299 + bg.getGreen()*0.587 + bg.getBlue()*0.114);
-    return brightness > 130 ? Color.BLACK : Color.WHITE;
-}
-
-private void applyTheme(java.awt.Color themeColor) {
-        JComponent root = (JComponent) getContentPane();
-    
-    boolean darkMode = (themeColor.getRed()*0.299 + themeColor.getGreen()*0.587 + themeColor.getBlue()*0.114) < 128;
-    updateTheme(darkMode);
-
-    Color lightColor = new Color(
-        Math.min(themeColor.getRed() + 35, 255),
-        Math.min(themeColor.getGreen() + 35, 255),
-        Math.min(themeColor.getBlue() + 35, 255)
-    );
-    Color darkColor = themeColor;
-
-    UIComponent decorated =
-        new HoverDecorator(
-            new BorderDecorator(
-                new BackgroundDecorator(
-                    new BaseUIComponent(), themeColor
-                ), themeColor
-            ), themeColor
-        );
-
-    decorated.apply(root);
-    applyToAll(root, decorated);
-
-    // تعديل الأزرار بعد تطبيق decorators
-    applyButtonColors(root, lightColor);
-
-    root.revalidate();
-    root.repaint();
-}
-
-private void applyButtonColors(JComponent parent, Color color) {
-    for (Component c : parent.getComponents()) {
-        if (c instanceof JButton btn) {
-            btn.setBackground(color);          // الخلفية كلها نفس اللون
-            btn.setForeground(getTextColor(color)); // لون النص مناسب للخلفية
-        } else if (c instanceof JComponent jc && jc instanceof Container) {
-            applyButtonColors(jc, color); // استدعاء متكرر لكل مكونات الحاويات
-        }
-    }
-}
-
-
-private void applyToAll(JComponent parent, UIComponent decorated) {
-    for (java.awt.Component c : parent.getComponents()) {
-        if (c instanceof JComponent jc) {
-            // نطبق على هذا المكوّن
-            decorated.apply(jc);
-            // إذا هو Container فيه أبناء، نعمل استدعاء متكرر
-            if (jc instanceof java.awt.Container) {
-                applyToAll(jc, decorated);
-            }
-        }
-    }
-}
-private void resetCalculatorUI() {
-    // إزالة كل شيء من الواجهة
-    getContentPane().removeAll();
-
-    // إعادة initComponents() أو أي دالة تهيئة كاملة للواجهة
-    initComponents();  // هذه تنشئ كل الأزرار، العنوان، titleBar، الخ
-    setupThemeButton(); // إعادة إعداد زر الثيمات
-
-    // إعادة التحقق من الواجهة وإعادة رسمها
-    getContentPane().revalidate();
-    getContentPane().repaint();
-}
-
-public void updateTheme(boolean darkMode) {
-    if(darkMode) {
-        // وضع الثيم الداكن
-        title.setForeground(Color.WHITE);
-        titleBar.setBackground(new Color(45, 45, 45)); // مثال
-        
-    } else {
-        // وضع الثيم الفاتح
-        title.setForeground(Color.BLACK);
-        titleBar.setBackground(new Color(220, 220, 220)); // مثال
-        btnClose.setBackground(Color.WHITE); // خلفية الزر
-        btnClose.setForeground(Color.BLACK); // نص الزر أسود دائماً
-    }
-}
-
-
-    
 }
