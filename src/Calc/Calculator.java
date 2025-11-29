@@ -1,99 +1,106 @@
 package Calc;
 
-
 public final class Calculator {
-    
+
     private final ComplexMath complex = new ComplexMath();
+
     private String currentOperand;
     private String previousOperand;
-    private String operation;
+    private Operation strategy; 
     private String unaryOperation = "";
+    private String operationSymbol = "";
 
     public Calculator() {
-        this.clear();
+        clear();
     }
 
     public void clear() {
         this.currentOperand = "";
         this.previousOperand = "";
-        this.operation = "";
+        this.strategy = null;
+        this.unaryOperation = "";
+        this.operationSymbol = ""; 
     }
 
     public void appendNumber(String number) {
-        if (this.currentOperand.equals("0") && number.equals("0")) {
-            return;
+        if (currentOperand.equals("0") && number.equals("0")) return;
+        if (number.equals(".") && currentOperand.contains(".")) return;
+        if (currentOperand.equals("0") && !number.equals("0") && !number.equals(".")) {
+            currentOperand = "";
         }
-        if (number.equals(".") && this.currentOperand.contains(".")) {
-            return;
-        }
-        if (this.currentOperand.equals("0")
-                && !number.equals("0")
-                && !number.equals(".")) {
-            this.currentOperand = "";
-        }
-        this.currentOperand += number;
+        currentOperand += number;
     }
 
-    public void chooseOperation(String operation) {
-        if (this.currentOperand.equals("") && !this.previousOperand.equals("")) {
-            this.operation = operation;
+    public void chooseOperation(String op) {
+        this.operationSymbol = op;
+
+        if (currentOperand.equals("") && !previousOperand.equals("")) {
+            strategy = getOperation(op);
             return;
         }
-        if (this.currentOperand.equals("")) {
-            return;
+        if (currentOperand.equals("")) return;
+
+        if (!previousOperand.equals("")) {
+            compute();
         }
-        if (!this.previousOperand.equals("")) {
-            this.compute();
-        }
-        this.operation = operation;
-        this.previousOperand = this.currentOperand;
-        this.currentOperand = "";
+        
+        strategy = getOperation(op);
+        previousOperand = currentOperand;
+        currentOperand = "";
     }
-    public void startUnaryOperation(String operation) {
-        if (!currentOperand.isEmpty()) return; 
-        unaryOperation = operation;
-        previousOperand = operation + "(";
-        currentOperand = ""; 
+
+    public void startUnaryOperation(String op) {
+        if (!currentOperand.isEmpty()) return;
+
+        unaryOperation = op;
+        previousOperand = op + "(";
+        currentOperand = "";
+        strategy = getOperation(op);
+        operationSymbol = "";
     }
 
     public void compute() {
-    try {
-        if (!unaryOperation.isEmpty() && !currentOperand.isEmpty()) {
-            float a = Float.parseFloat(currentOperand.replace("(", "").replace(")", ""));
-            Operation opr = getOperation(unaryOperation);
-            float result = opr.apply(a, 0);
-            if (Float.isNaN(result) || Float.isInfinite(result)) {
-                clear();
-                currentOperand = "Error";
+        try {
+            if (!unaryOperation.isEmpty() && !currentOperand.isEmpty()) {
+                float a = Float.parseFloat(currentOperand.replace("(", "").replace(")", ""));
+                float result = strategy.apply(a, 0);
+
+                if (Float.isNaN(result) || Float.isInfinite(result)) {
+                    clear();
+                    currentOperand = "Error";
+                    return;
+                }
+
+                currentOperand = (result - (int) result) != 0
+                        ? Float.toString(result)
+                        : Integer.toString((int) result);
+
+                unaryOperation = "";
+                previousOperand = "";
+                strategy = null;
+                operationSymbol = "";
                 return;
             }
-            currentOperand = (result - (int) result) != 0 ? Float.toString(result) : Integer.toString((int) result);
-            unaryOperation = "";
+
+            if (currentOperand.equals("") || previousOperand.equals("") || strategy == null) return;
+            float curr = Float.parseFloat(currentOperand.replace("(", "").replace(")", ""));
+            float prev = Float.parseFloat(previousOperand.replace("(", "").replace(")", ""));
+            float computation = strategy.apply(prev, curr);
+
+            currentOperand = (computation - (int) computation) != 0
+                    ? Float.toString(computation)
+                    : Integer.toString((int) computation);
+
             previousOperand = "";
-            return;
-        }
+            strategy = null;
+            operationSymbol = "";
 
-        if (currentOperand.equals("") || previousOperand.equals("") || operation.isEmpty()) return;
-
-        float curr = Float.parseFloat(currentOperand.replace("(", "").replace(")", ""));
-        float prev = Float.parseFloat(previousOperand.replace("(", "").replace(")", ""));
-
-        if (operation.equals("/") && curr == 0) {
+        } catch (ArithmeticException | NumberFormatException e) {
             clear();
             currentOperand = "Error";
-            return;
         }
-
-        Operation oprObj = getOperation(operation);
-        float computation = oprObj.apply(prev, curr);
-
-        currentOperand = (computation - (int) computation) != 0 ? Float.toString(computation) : Integer.toString((int) computation);
-        previousOperand = "";
-        operation = "";
-    } catch (NumberFormatException e) {
-        currentOperand = "Error";
     }
-}
+
     public Operation getOperation(String op) {
         switch (op) {
             case "+": return new AddOperation();
@@ -113,27 +120,12 @@ public final class Calculator {
         throw new IllegalArgumentException("Unknown operation: " + op);
     }
 
-    public void setPreviousOperand(String value) {
-    this.previousOperand = value;
-}
+    // Getters و Setters
+    public String getCurrentOperand() { return currentOperand; }
+    public String getPreviousOperand() { return previousOperand; }
+    public String getUnaryOperation() { return unaryOperation; }
+    public String getOperationSymbol() { return operationSymbol; }
 
-    public String getCurrentOperand() {
-        return currentOperand;
-    }
-
-    public String getPreviousOperand() {
-        return previousOperand;
-    }
-
-    public String getOperation() {
-        return operation;
-    }
-
-    public void setCurrentOperand(String value) {
-        this.currentOperand = value;
-    }
-    public String getUnaryOperation() {
-        return unaryOperation;
-    }
-
+    public void setCurrentOperand(String value) { this.currentOperand = value; }
+    public void setPreviousOperand(String value) { this.previousOperand = value; }
 }
