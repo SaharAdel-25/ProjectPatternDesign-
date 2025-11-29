@@ -4,6 +4,7 @@ package Calc;
 import javax.swing.*;
 
 public abstract class UIDecorator implements UIComponent {
+    
     protected UIComponent component;
 
     public UIDecorator(UIComponent component) {
