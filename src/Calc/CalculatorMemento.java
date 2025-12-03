@@ -5,7 +5,7 @@ public class CalculatorMemento {
     private final String currentOperand;
     private final String previousOperand;
     private final String operationSymbol;
-    private final String unaryOperation; // إضافة جديدة
+    private final String unaryOperation;
 
     public CalculatorMemento(String current, String previous, String symbol, String unary) {
         this.currentOperand = current;
@@ -18,5 +18,5 @@ public class CalculatorMemento {
     public String getCurrentOperand() { return currentOperand; }
     public String getPreviousOperand() { return previousOperand; }
     public String getOperationSymbol() { return operationSymbol; }
-    public String getUnaryOperation() { return unaryOperation; } // جديد
+    public String getUnaryOperation() { return unaryOperation; }
 }

@@ -6,14 +6,10 @@ import java.util.ArrayList;
 
 public class HistoryManager {
 
-    // Stack لحفظ الميمينتو (لـ Undo)
     private final Stack<CalculatorMemento> historyStack = new Stack<>();
-
-    // List لحفظ عرض السجل كنصوص
     private final List<String> historyDisplayList = new ArrayList<>();
 
-    // حفظ الميمينتو مع نص العملية
-    public void save(CalculatorMemento memento, String operationText) {
+    public void AddMemento(CalculatorMemento memento, String operationText) {
         historyStack.push(memento);
         if (operationText != null && !operationText.isEmpty()) {
             historyDisplayList.add(operationText);
@@ -21,9 +17,8 @@ public class HistoryManager {
     }
 
     // Undo
-    public CalculatorMemento undo() {
+    public CalculatorMemento getMemento() {
         if (!historyStack.isEmpty()) {
-            // عند Undo نزيل آخر عنصر من السجل أيضاً
             if (!historyDisplayList.isEmpty()) {
                 historyDisplayList.remove(historyDisplayList.size() - 1);
             }
@@ -32,7 +27,6 @@ public class HistoryManager {
         return null;
     }
 
-    // جلب كل النصوص للسجل
     public List<String> getHistory() {
         return historyDisplayList;
     }

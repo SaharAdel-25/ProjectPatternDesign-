@@ -660,33 +660,45 @@ public final class CalculatorUI extends javax.swing.JFrame  {
         titleBar.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 2, -1, 25));
 
         int spacing = 10;
-
         btnUndo.setBackground(new java.awt.Color(240, 240, 240));
-        btnUndo.setFont(new java.awt.Font("Century Gothic", 1, 14));
+        btnUndo.setFont(new java.awt.Font("Segoe UI Symbol", 1, 18));
         btnUndo.setForeground(java.awt.Color.DARK_GRAY);
-        btnUndo.setText("↶"); // رمز Undo
-        btnUndo.setBorder(null);
+        btnUndo.setText("⟲"); 
+
+        btnUndo.setBorder(null); 
+        btnUndo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnUndo.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+
         btnUndo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUndo.setFocusPainted(false);
+
         btnUndo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUndoActionPerformed(evt);           
+                btnUndoActionPerformed(evt);
             }
         });
-        titleBar.add(btnUndo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 2, 40, 26));
 
-        btnHistory.setBackground(new java.awt.Color(240, 240, 240));
-        btnHistory.setFont(new java.awt.Font("Century Gothic", 1, 14));
+        titleBar.add(btnUndo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 2, 40, 26));
+        
+           btnHistory.setBackground(new java.awt.Color(240, 240, 240));
+        btnHistory.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18));
         btnHistory.setForeground(java.awt.Color.DARK_GRAY);
-        btnHistory.setText("≡"); // رمز قائمة History
-        btnHistory.setBorder(null);
+
+        btnHistory.setText("🕘"); 
+
+        btnHistory.setBorder(null); 
+        btnHistory.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnHistory.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+
         btnHistory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHistory.setFocusPainted(false);
+
         btnHistory.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnHistoryActionPerformed(evt);           
+                btnHistoryActionPerformed(evt);
             }
         });
+
         titleBar.add(btnHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(100 + 40 + spacing, 2, 40, 26));
 
         btnMini.setBackground(new java.awt.Color(21, 20, 22));
@@ -753,25 +765,47 @@ public final class CalculatorUI extends javax.swing.JFrame  {
         
     }//GEN-LAST:event_previousActionPerformed
 
+    
+    
+    
+    
+    
     private void btnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
-        List<String> history = calculator.getHistoryManager().getHistory();
-                // تحقق إذا كان السجل فارغًا
-                String historyText;
-                if (history.isEmpty()) {
-                    historyText = "History is empty"; // النص المعروض عند الفراغ
-                } else {
-                    historyText = String.join("\n", history);
-                }
-                javax.swing.JOptionPane.showMessageDialog(
-                    CalculatorUI.this,
-                    historyText,
-                    "History",
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE
-        );       
+      
+            List<String> history = calculator.getHistoryManager();
+
+            if (history.isEmpty()) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No operations recorded yet", "Operation History", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = history.size() - 1; i >= 0; i--) { 
+                sb.append(history.get(i)).append("\n");
+            }
+
+            javax.swing.JTextArea textArea = new javax.swing.JTextArea(sb.toString());
+            textArea.setEditable(false);
+
+            textArea.setBackground(new java.awt.Color(21, 20, 22)); 
+            textArea.setForeground(new java.awt.Color(255, 255, 255)); 
+            textArea.setFont(new java.awt.Font("Century Gothic", 0, 14)); 
+            javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(textArea);
+            scrollPane.setPreferredSize(new java.awt.Dimension(300, 200));
+            scrollPane.setBorder(null); 
+
+            javax.swing.JOptionPane.showMessageDialog(
+                this, 
+                scrollPane, 
+                "History",
+                javax.swing.JOptionPane.PLAIN_MESSAGE 
+            );
+
+
              
     }
     private void btnUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
-        calculator.undo(); // افترض أنك تضيف ميثود undo في كلاس Calculator
+        calculator.undo(); 
         updateDisplay();         
              
     }
@@ -833,8 +867,7 @@ public final class CalculatorUI extends javax.swing.JFrame  {
 
     private void btnCloseParenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseParenActionPerformed
         if (!calculator.getUnaryOperation().isEmpty()) {
-        // نضع القوس في previousOperand للعرض
-        calculator.setPreviousOperand(calculator.getUnaryOperation() + "(" + calculator.getCurrentOperand() + ")");
+            calculator.setPreviousOperand(calculator.getUnaryOperation() + "(" + calculator.getCurrentOperand() + ")");
     } else {
         calculator.appendNumber(")");
     }
@@ -885,6 +918,7 @@ public final class CalculatorUI extends javax.swing.JFrame  {
         calculator.setCurrentOperand(String.valueOf(Math.E));
         updateDisplay();
     }//GEN-LAST:event_btnEActionPerformed
+
 
     private void btnPiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiActionPerformed
         String curr = calculator.getCurrentOperand();
@@ -995,7 +1029,7 @@ public final class CalculatorUI extends javax.swing.JFrame  {
 
     // قائمة الثيمات
     JPopupMenu menu = new JPopupMenu();
-    JMenuItem dark = new JMenuItem("Dark Theme"); // اللون الأساسي
+    JMenuItem dark = new JMenuItem("Dark Theme");
     JMenuItem pink = new JMenuItem("Pink Theme");
     JMenuItem blue = new JMenuItem("Blue Theme");
     JMenuItem purple = new JMenuItem("Purple Theme");
@@ -1007,12 +1041,10 @@ public final class CalculatorUI extends javax.swing.JFrame  {
     menu.add(purple);
     menu.add(green);
 
-    // فتح القائمة عند الضغط على الزر
     btnTheme.addActionListener(e -> {
         menu.show(btnTheme, 0, btnTheme.getHeight());
     });
 
-    // تطبيق لكل لون
     dark.addActionListener(e -> resetCalculatorUI());
     pink.addActionListener(e -> applyTheme(new java.awt.Color(255, 192, 203)));   // Pink
     blue.addActionListener(e -> applyTheme(new java.awt.Color(173, 216, 230)));   // Light Blue
@@ -1031,7 +1063,6 @@ public final class CalculatorUI extends javax.swing.JFrame  {
             Math.min(themeColor.getGreen() + 35, 255),
             Math.min(themeColor.getBlue() + 35, 255)
         );
-//        Color darkColor = themeColor;
 
         UIComponent decorated =
             new HoverDecorator(
