@@ -3,7 +3,8 @@ package Calc;
 public final class Calculator {
 
     private final ComplexMath complex = new ComplexMath();
-
+    private final HistoryManager historyManager;
+    
     private String currentOperand;
     private String previousOperand;
     private Operation strategy; 
@@ -11,15 +12,16 @@ public final class Calculator {
     private String operationSymbol = "";
 
     public Calculator() {
+        this.historyManager = new HistoryManager(this);
         clear();
     }
-
     public void clear() {
         this.currentOperand = "";
         this.previousOperand = "";
         this.strategy = null;
         this.unaryOperation = "";
         this.operationSymbol = ""; 
+
     }
 
     public void appendNumber(String number) {
@@ -128,4 +130,26 @@ public final class Calculator {
 
     public void setCurrentOperand(String value) { this.currentOperand = value; }
     public void setPreviousOperand(String value) { this.previousOperand = value; }
+
+    
+    
+    ////////////////////////////////////////////////////////////////
+    public CalculatorMemento saveState() {
+        return new CalculatorMemento(
+            this.currentOperand, 
+            this.previousOperand, 
+            this.operationSymbol
+        );
+    }
+
+    public void restoreState(CalculatorMemento memento) {
+        this.currentOperand = memento.getCurrentOperand();
+        this.previousOperand = memento.getPreviousOperand();
+        this.operationSymbol = memento.getOperationSymbol();
+    }
+
+    public HistoryManager getHistoryManager() {
+        return historyManager;
+    }
+
 }
