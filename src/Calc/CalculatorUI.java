@@ -9,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
@@ -661,13 +662,14 @@ public final class CalculatorUI extends javax.swing.JFrame  {
 
         int spacing = 10;
         btnUndo.setBackground(new java.awt.Color(240, 240, 240));
-        btnUndo.setFont(new java.awt.Font("Segoe UI Symbol", 1, 18));
+        btnUndo.setFont(new java.awt.Font("Segoe UI Symbol", 1, 20));
         btnUndo.setForeground(java.awt.Color.DARK_GRAY);
         btnUndo.setText("⟲"); 
 
         btnUndo.setBorder(null); 
         btnUndo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnUndo.setVerticalAlignment(javax.swing.SwingConstants.CENTER);
+        btnUndo.setBorder(BorderFactory.createEmptyBorder(0, 0, 7, 0)); 
 
         btnUndo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnUndo.setFocusPainted(false);
@@ -680,8 +682,8 @@ public final class CalculatorUI extends javax.swing.JFrame  {
 
         titleBar.add(btnUndo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 2, 40, 26));
         
-           btnHistory.setBackground(new java.awt.Color(240, 240, 240));
-        btnHistory.setFont(new java.awt.Font("Segoe UI Emoji", 1, 18));
+        btnHistory.setBackground(new java.awt.Color(240, 240, 240));
+        btnHistory.setFont(new java.awt.Font("Segoe UI Emoji", 1, 17));
         btnHistory.setForeground(java.awt.Color.DARK_GRAY);
 
         btnHistory.setText("🕘"); 
