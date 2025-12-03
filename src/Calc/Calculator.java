@@ -44,10 +44,8 @@ public final class Calculator {
         }
         if (currentOperand.equals("")) return;
 
-        // تعيين strategy قبل أي شيء
         strategy = getOperation(op);
 
-        // احسبي فقط إذا كان previousOperand جديد ولم يأت من Undo
         if (!previousOperand.equals("") && !currentOperand.equals("")) {
             compute();
         }
@@ -149,8 +147,14 @@ public final class Calculator {
 
     // Memento 
     public CalculatorMemento storeInMemento() {
-        return new CalculatorMemento(currentOperand, previousOperand, operationSymbol, unaryOperation);
+        return new CalculatorMemento(
+            currentOperand.replace("(", "").replace(")", ""),
+            previousOperand.replace("(", "").replace(")", ""),
+            operationSymbol,
+            unaryOperation
+        );
     }
+
 
     public void restoreFromMemento(CalculatorMemento memento) {
         this.currentOperand = memento.getCurrentOperand();
@@ -164,6 +168,8 @@ public final class Calculator {
         CalculatorMemento memento = historyManager.getMemento();
         if (memento != null) {
             restoreFromMemento(memento);
+        } else {
+            clear();
         }
     }
 

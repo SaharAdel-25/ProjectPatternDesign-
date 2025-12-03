@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.border.EmptyBorder;
 
 
 
@@ -783,7 +784,9 @@ public final class CalculatorUI extends javax.swing.JFrame  {
 
             StringBuilder sb = new StringBuilder();
             for (int i = history.size() - 1; i >= 0; i--) { 
-                sb.append(history.get(i)).append("\n");
+                
+                String cleanEntry = history.get(i).replace("(", "").replace(")", "");
+                sb.append(cleanEntry).append("\n");
             }
 
             javax.swing.JTextArea textArea = new javax.swing.JTextArea(sb.toString());
@@ -792,6 +795,7 @@ public final class CalculatorUI extends javax.swing.JFrame  {
             textArea.setBackground(new java.awt.Color(21, 20, 22)); 
             textArea.setForeground(new java.awt.Color(255, 255, 255)); 
             textArea.setFont(new java.awt.Font("Century Gothic", 0, 14)); 
+            textArea.setBorder(new EmptyBorder(5, 10, 0, 0));
             javax.swing.JScrollPane scrollPane = new javax.swing.JScrollPane(textArea);
             scrollPane.setPreferredSize(new java.awt.Dimension(300, 200));
             scrollPane.setBorder(null); 
