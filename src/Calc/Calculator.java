@@ -126,7 +126,7 @@ public final class Calculator {
             case "*": return new MulOperation();
             case "/": return new DivOperation();
             case "^": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.POW);
-            case "sqr": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.SQRT);
+            case "sqr": case "√": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.SQRT);
             case "exp": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.EXP);
             case "logb": case "log": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.LOG_BASE);
             case "π": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.PI);
