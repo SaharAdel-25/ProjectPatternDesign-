@@ -4,12 +4,11 @@ package Calc;
 // CalculatorUI.java
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
@@ -100,6 +99,8 @@ public final class CalculatorUI extends javax.swing.JFrame  {
     private void initComponents() {
 
         app = new javax.swing.JPanel();
+        btnUndo = new javax.swing.JButton();
+        btnHistory = new javax.swing.JButton();
         resultsPanel = new javax.swing.JPanel();
         previous = new javax.swing.JTextField();
         current = new javax.swing.JTextField();
@@ -658,6 +659,36 @@ public final class CalculatorUI extends javax.swing.JFrame  {
         title.setRequestFocusEnabled(false);
         titleBar.add(title, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 2, -1, 25));
 
+        int spacing = 10;
+
+        btnUndo.setBackground(new java.awt.Color(240, 240, 240));
+        btnUndo.setFont(new java.awt.Font("Century Gothic", 1, 14));
+        btnUndo.setForeground(java.awt.Color.DARK_GRAY);
+        btnUndo.setText("↶"); // رمز Undo
+        btnUndo.setBorder(null);
+        btnUndo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUndo.setFocusPainted(false);
+        btnUndo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUndoActionPerformed(evt);           
+            }
+        });
+        titleBar.add(btnUndo, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 2, 40, 26));
+
+        btnHistory.setBackground(new java.awt.Color(240, 240, 240));
+        btnHistory.setFont(new java.awt.Font("Century Gothic", 1, 14));
+        btnHistory.setForeground(java.awt.Color.DARK_GRAY);
+        btnHistory.setText("≡"); // رمز قائمة History
+        btnHistory.setBorder(null);
+        btnHistory.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHistory.setFocusPainted(false);
+        btnHistory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistoryActionPerformed(evt);           
+            }
+        });
+        titleBar.add(btnHistory, new org.netbeans.lib.awtextra.AbsoluteConstraints(100 + 40 + spacing, 2, 40, 26));
+
         btnMini.setBackground(new java.awt.Color(21, 20, 22));
         btnMini.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
         btnMini.setForeground(new java.awt.Color(255, 255, 255));
@@ -722,6 +753,28 @@ public final class CalculatorUI extends javax.swing.JFrame  {
         
     }//GEN-LAST:event_previousActionPerformed
 
+    private void btnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
+        List<String> history = calculator.getHistoryManager().getHistory();
+                // تحقق إذا كان السجل فارغًا
+                String historyText;
+                if (history.isEmpty()) {
+                    historyText = "History is empty"; // النص المعروض عند الفراغ
+                } else {
+                    historyText = String.join("\n", history);
+                }
+                javax.swing.JOptionPane.showMessageDialog(
+                    CalculatorUI.this,
+                    historyText,
+                    "History",
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE
+        );       
+             
+    }
+    private void btnUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
+        calculator.undo(); // افترض أنك تضيف ميثود undo في كلاس Calculator
+        updateDisplay();         
+             
+    }
     private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
         calculator.startUnaryOperation("cos");
     updateDisplay();
@@ -729,9 +782,8 @@ public final class CalculatorUI extends javax.swing.JFrame  {
 
     private void btnSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
         calculator.startUnaryOperation("sin");
-    updateDisplay();        
-            
-        
+        updateDisplay();        
+             
     }//GEN-LAST:event_btnSinActionPerformed
     
     private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
@@ -890,6 +942,8 @@ public final class CalculatorUI extends javax.swing.JFrame  {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel app;
+    private javax.swing.JButton btnUndo;
+    private javax.swing.JButton btnHistory;
     private static javax.swing.JButton btn0;
     private static javax.swing.JButton btn1;
     private static javax.swing.JButton btn2;
@@ -1029,7 +1083,6 @@ public final class CalculatorUI extends javax.swing.JFrame  {
             btnClose.setForeground(Color.BLACK); // نص الزر أسود دائماً
         }
     }
-
 
     
 }

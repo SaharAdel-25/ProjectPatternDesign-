@@ -2,38 +2,37 @@ package Calc;
 
 import java.util.Stack;
 import java.util.List;
-import java.util.ArrayList; 
+import java.util.ArrayList;
 
 public class HistoryManager {
-    
+
+    // Stack لحفظ الميمينتو (لـ Undo)
     private final Stack<CalculatorMemento> historyStack = new Stack<>();
-    private final Calculator originator; // الأصل
 
-    private final List<String> historyDisplayList = new ArrayList<>(); 
+    // List لحفظ عرض السجل كنصوص
+    private final List<String> historyDisplayList = new ArrayList<>();
 
-    public HistoryManager(Calculator calc) {
-        this.originator = calc;
-    }
-
-    
-    public void save() {
-        historyStack.push(originator.saveState());
-    }
-
-    public boolean undo() {
-        if (!historyStack.isEmpty()) {
-            CalculatorMemento memento = historyStack.pop();
-            originator.restoreState(memento);
-            return true;
+    // حفظ الميمينتو مع نص العملية
+    public void save(CalculatorMemento memento, String operationText) {
+        historyStack.push(memento);
+        if (operationText != null && !operationText.isEmpty()) {
+            historyDisplayList.add(operationText);
         }
-        return false;
-    }
-    
-
-    public void addOperationToHistory(String operationText) {
-        historyDisplayList.add(operationText);
     }
 
+    // Undo
+    public CalculatorMemento undo() {
+        if (!historyStack.isEmpty()) {
+            // عند Undo نزيل آخر عنصر من السجل أيضاً
+            if (!historyDisplayList.isEmpty()) {
+                historyDisplayList.remove(historyDisplayList.size() - 1);
+            }
+            return historyStack.pop();
+        }
+        return null;
+    }
+
+    // جلب كل النصوص للسجل
     public List<String> getHistory() {
         return historyDisplayList;
     }

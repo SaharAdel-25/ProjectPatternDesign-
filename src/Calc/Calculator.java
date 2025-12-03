@@ -4,24 +4,24 @@ public final class Calculator {
 
     private final ComplexMath complex = new ComplexMath();
     private final HistoryManager historyManager;
-    
+
     private String currentOperand;
     private String previousOperand;
-    private Operation strategy; 
+    private Operation strategy;
     private String unaryOperation = "";
     private String operationSymbol = "";
 
     public Calculator() {
-        this.historyManager = new HistoryManager(this);
+        this.historyManager = new HistoryManager();
         clear();
     }
+
     public void clear() {
         this.currentOperand = "";
         this.previousOperand = "";
         this.strategy = null;
         this.unaryOperation = "";
-        this.operationSymbol = ""; 
-
+        this.operationSymbol = "";
     }
 
     public void appendNumber(String number) {
@@ -34,6 +34,7 @@ public final class Calculator {
     }
 
     public void chooseOperation(String op) {
+        // نفس منطق العمليات القديم
         this.operationSymbol = op;
 
         if (currentOperand.equals("") && !previousOperand.equals("")) {
@@ -45,7 +46,7 @@ public final class Calculator {
         if (!previousOperand.equals("")) {
             compute();
         }
-        
+
         strategy = getOperation(op);
         previousOperand = currentOperand;
         currentOperand = "";
@@ -62,6 +63,7 @@ public final class Calculator {
     }
 
     public void compute() {
+
         try {
             if (!unaryOperation.isEmpty() && !currentOperand.isEmpty()) {
                 float a = Float.parseFloat(currentOperand.replace("(", "").replace(")", ""));
@@ -76,6 +78,9 @@ public final class Calculator {
                 currentOperand = (result - (int) result) != 0
                         ? Float.toString(result)
                         : Integer.toString((int) result);
+                
+                String operationText = previousOperand + " " + operationSymbol + " " + currentOperand + " = " + result;
+                historyManager.save(this.saveState(), operationText);
 
                 unaryOperation = "";
                 previousOperand = "";
@@ -92,6 +97,9 @@ public final class Calculator {
             currentOperand = (computation - (int) computation) != 0
                     ? Float.toString(computation)
                     : Integer.toString((int) computation);
+            
+            String operationText = previousOperand + " " + operationSymbol + " " + currentOperand + " = " + computation;
+            historyManager.save(this.saveState(), operationText);
 
             previousOperand = "";
             strategy = null;
@@ -131,25 +139,28 @@ public final class Calculator {
     public void setCurrentOperand(String value) { this.currentOperand = value; }
     public void setPreviousOperand(String value) { this.previousOperand = value; }
 
-    
-    
-    ////////////////////////////////////////////////////////////////
+    // ====================== Memento =========================
     public CalculatorMemento saveState() {
-        return new CalculatorMemento(
-            this.currentOperand, 
-            this.previousOperand, 
-            this.operationSymbol
-        );
+        return new CalculatorMemento(currentOperand, previousOperand, operationSymbol, unaryOperation);
     }
 
     public void restoreState(CalculatorMemento memento) {
         this.currentOperand = memento.getCurrentOperand();
         this.previousOperand = memento.getPreviousOperand();
         this.operationSymbol = memento.getOperationSymbol();
+        this.unaryOperation = memento.getUnaryOperation(); // استرجاع العملية الأحادية
     }
 
+
+    // ====================== History ========================
     public HistoryManager getHistoryManager() {
         return historyManager;
     }
 
+    public void undo() {
+        CalculatorMemento memento = historyManager.undo();
+        if (memento != null) {
+            restoreState(memento);
+        }
+    }
 }
