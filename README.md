@@ -52,5 +52,4 @@
 
 <br>
 
----
-**Developed by: Software Engineering Student @ Jeddah University (2026)**
+
