@@ -1,44 +1,41 @@
+# Calculator Design Patterns Project
 
- Calculator Design Patterns Project
-في مشروع مادة Design Patterns حولنا آلة حاسبة بسيطة إلى نموذج منظم ومرن. بدأنا بكود كله في كلاس واحد، ثم قمنا بإعادة هيكلة الوظائف باستخدام الأنماط الثلاثة: Creational، Structural، وBehavioral، لتصبح الوظائف واضحة وسهلة التوسيع والصيانة.
+### الخلاصة (Abstract)
+حولنا آلة حاسبة من كود معقد وكلاس واحد إلى نظام منظم ومرن باستخدام أنماط التصميم لضمان سهولة التوسيع والصيانة.
+We transformed a cluttered, single-class calculator into a modular, scalable system using industry-standard Design Patterns.
 
-خلال المشروع طبقنا عدة Patterns مهمة:
+---
 
-Singleton: لضمان وجود نسخة واحدة فقط من واجهة الحاسبة طوال تشغيل البرنامج.
+### الأنماط المطبقة | Design Patterns Applied
 
-Factory Method: لإنشاء كائنات العمليات الحسابية بناءً على مدخلات المستخدم دون تعقيد الكود الرئيسي.
+| Pattern | الوصف (Description) |
+| --- | --- |
+| **Singleton** | نسخة واحدة فقط من واجهة الحاسبة (Single UI Instance). |
+| **Factory Method** | فصل منطق إنشاء العمليات عن الكود الرئيسي (Encapsulated Creation). |
+| **Memento** | حفظ واسترجاع حالة الحاسبة / السجل (State History/Undo). |
+| **Adapter** | دمج مكتبات خارجية دون تعديل الكود القديم (Legacy Bridge). |
+| **Strategy** | تغيير خوارزمية الحساب أثناء التشغيل (Runtime Logic Switching). |
+| **Decorator** | إضافة ميزات وسمات دون تعديل الكلاس الأصلي (Dynamic Enhancements). |
 
-Memento: لحفظ واسترجاع حالة الآلة الحاسبة (History) بسهولة.
+---
 
-Adapter: لربط مكتبات حسابية خارجية (Advanced Math) مع نظامنا الحالي دون تعديل الكود القديم.
+### رحلة التحول | Transformation Journey
 
-Strategy: لتغيير خوارزمية العمليات الحسابية أثناء التشغيل بمرونة عالية.
+#### 1. مخططات الـ UML (الهيكلية)
 
-Decorator: لإضافة ميزات إضافية للكائن (مثل السمات) دون الحاجة لتغيير الكلاس الأصلي.
+| قبل التعديل (Before) | بعد التعديل (After) |
+| --- | --- |
+| <img src="https://github.com/user-attachments/assets/5610a404-c544-4fc0-a705-88b29d5527ba" width="400"> | <img src="https://github.com/user-attachments/assets/156b60d9-6659-489a-bdab-fb5c1eb69431" width="400"> |
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
+#### 2. الواجهة الرسومية (UI)
 
+**التغيير (Before & After)**
+<br>
+<img src="https://github.com/user-attachments/assets/90b3879a-52a7-4ed9-afbf-fc9bca4b2ee7" width="700">
 
-In my Design Patterns course project, we transformed a simple calculator from a single cluttered class into a clear and flexible design using Creational, Structural, and Behavioral patterns to make the code scalable and maintainable.
+**السمات والألوان (Themes)**
+<br>
+<img src="https://github.com/user-attachments/assets/3c4f3488-13be-47c8-86ce-c215019b4cf1" width="700">
 
-During the project, we applied several key Patterns:
-
-Singleton: To ensure only one instance of the calculator UI exists.
-
-Factory Method: To create operation objects based on user input without complicating the main code.
-
-Memento: To easily save and restore the calculator's state (History).
-
-Adapter: To bridge external math libraries with our current system without modifying old code.
-
-Strategy: To switch calculation algorithms at runtime with high flexibility.
-
-Decorator: To add extra features (like themes) without changing the original class.
-
-
-Project Progress (UML & UI)
-![uml_before](https://github.com/user-attachments/assets/a86a101b-6c2b-4da9-a54b-a354b7d4de18)
-<img width="2660" height="2069" alt="uml_after" src="https://github.com/user-attachments/assets/156b60d9-6659-489a-bdab-fb5c1eb69431" />
-![befor_after](https://github.com/user-attachments/assets/8ab75723-08c4-4a82-ba6e-f73463d9475c)
-![color](https://github.com/user-attachments/assets/e599ca28-0b15-4a44-b5cc-901bb385510f)
+---
 
