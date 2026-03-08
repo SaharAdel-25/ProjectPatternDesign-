@@ -4,7 +4,7 @@ package Calc;
 
 public class ComplexMath {
 
-    public float calculate(float a, float b, ComplexMathAdapter.OpType type) {
+    public float calculate(float a, float b, OpType type) {
         return switch (type) {
             case POW -> (float) Math.pow(a, b); 
             case SQRT -> (float) Math.sqrt(a); 

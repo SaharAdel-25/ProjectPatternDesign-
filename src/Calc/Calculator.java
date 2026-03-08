@@ -123,15 +123,15 @@ public final class Calculator {
             case "-": return new SubOperation();
             case "*": return new MulOperation();
             case "/": return new DivOperation();
-            case "^": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.POW);
-            case "sqr": case "√": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.SQRT);
-            case "exp": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.EXP);
-            case "logb": case "log": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.LOG_BASE);
-            case "π": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.PI);
-            case "%": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.PERCENT);
-            case "sin": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.SIN);
-            case "cos": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.COS);
-            case "tan": return new ComplexMathAdapter(complex, ComplexMathAdapter.OpType.TAN);
+            case "^": return new ComplexMathAdapter(complex, OpType.POW);
+            case "sqr": case "√": return new ComplexMathAdapter(complex, OpType.SQRT);
+            case "exp": return new ComplexMathAdapter(complex, OpType.EXP);
+            case "logb": case "log": return new ComplexMathAdapter(complex, OpType.LOG_BASE);
+            case "π": return new ComplexMathAdapter(complex, OpType.PI);
+            case "%": return new ComplexMathAdapter(complex, OpType.PERCENT);
+            case "sin": return new ComplexMathAdapter(complex, OpType.SIN);
+            case "cos": return new ComplexMathAdapter(complex, OpType.COS);
+            case "tan": return new ComplexMathAdapter(complex, OpType.TAN);
         }
         throw new IllegalArgumentException("Unknown operation: " + op);
     }
